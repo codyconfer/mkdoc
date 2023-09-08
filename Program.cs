@@ -1,4 +1,4 @@
-﻿using mkdoc;
+﻿using mkdoc.Functions;
 using Stubble.Core.Builders;
 
 // ...
@@ -13,9 +13,11 @@ using Stubble.Core.Builders;
 
 try
 {
-    var (action, argMap) = Args.ParseArgMap(args);
-    var (path, hashData) = await HashData.ParseHashData(action, argMap);
-    var template = await File.ReadAllTextAsync(path);
+    var argMap = ArgMapper.ParseArgMap(args);
+    var command = argMap.Command;
+    var hashData = await DataHasher.ParseHashData(argMap);
+    var templatePath = hashData.TemplatePath;
+    var template = await File.ReadAllTextAsync(templatePath);
     var stubble = new StubbleBuilder()
         .Configure(settings =>
         {
@@ -24,19 +26,20 @@ try
         })
         .Build();
     var output = stubble.Render(template, hashData);
-    var fileName = $"{action}{path[(path.LastIndexOf('.'))..]}";
     await File.WriteAllTextAsync(
-        $"{Directory.GetCurrentDirectory()}/{fileName}",
+        FileSystemOperator.GetOutputFilePath(command, templatePath),
         output,
         CancellationToken.None
     );
 }
 catch (Exception e)
 {
+    Console.WriteLine(e);
     Console.WriteLine(
         e switch
         {
             ArgumentException => e.Message,
+            ApplicationException => e.Message,
             _ => "Unknown error occured."
         }
     );

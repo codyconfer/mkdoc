@@ -80,7 +80,7 @@ jobs:
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc-win-x64
-        path: ./dist/mkdoc
+        path: ./dist/mkdoc.exe
   win-arm64:
     runs-on: ubuntu-latest
     needs: test
@@ -96,7 +96,7 @@ jobs:
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc-win-arm64
-        path: ./dist/mkdoc
+        path: ./dist/mkdoc.exe
   linux-x64:
     runs-on: ubuntu-latest
     needs: test

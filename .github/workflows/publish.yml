@@ -18,13 +18,15 @@ jobs:
       run: dotnet restore
     - name: Test
       run: dotnet test --verbosity normal
-    - name: Publish
-      run: dotnet publish -o ./dist mkdoc.csproj
-    - name: Upload mkdoc Build Artifact
+    - name: Publish Arm Ubuntu
+      run: dotnet publish -o ./dist/linux-x86/ mkdoc.csproj
+    - name: Publish Arm MacOS
+      run: dotnet publish --os osx_arm64  -o ./dist/macos-arm64 mkdoc.csproj
+    - name: Upload Arm MacOS mkdoc Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc
-        path: ./dist/mkdoc
+        path: ./dist/macos-arm64/mkdoc
     - name: Upload templates Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:

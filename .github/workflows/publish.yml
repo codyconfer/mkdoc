@@ -19,7 +19,7 @@ jobs:
     - name: Test
       run: dotnet test --verbosity normal
     - name: Publish Templates
-      run: cp templates ./dist/templates
+      run: cp templates/* ./dist/templates/
     - name: Publish Arm MacOS
       run: dotnet publish --runtime osx-arm64 -o ./dist/macos-arm64 mkdoc.csproj
     - name: Upload Arm MacOS mkdoc Build Artifact

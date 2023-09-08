@@ -15,7 +15,7 @@
 
 
   <ItemGroup>
-    <None Update="templates\README">
+    <None Update="templates\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="templates\README.hashdata.json">

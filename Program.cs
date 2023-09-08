@@ -25,7 +25,7 @@ try
             settings.SetMaxRecursionDepth(512);
         })
         .Build();
-    var output = stubble.Render(template, hashData);
+    var output = stubble.Render(template, hashData.Data);
     await File.WriteAllTextAsync(
         FileSystemOperator.GetOutputFilePath(command, templatePath),
         output,

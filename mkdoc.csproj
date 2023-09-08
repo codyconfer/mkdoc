@@ -13,4 +13,13 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <None Update="templates\README">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\README.hashdata.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

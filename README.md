@@ -5,7 +5,7 @@ mkdoc is a C# console application that templates files with mustache.
 ## Tech Stack
 
 - [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
-- [.NET Core](https://docs.microsoft.com/en-us/dotnet/)
+- [.NET](https://docs.microsoft.com/en-us/dotnet/)
 - [Stubble](https://github.com/StubbleOrg/Stubble)
 - [Mustache Templates](https://mustache.github.io/)
 

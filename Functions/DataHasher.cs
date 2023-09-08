@@ -19,7 +19,7 @@ public static class DataHasher
             var hashRaw = await File.ReadAllTextAsync($"{hashDataPath}");
             var hashData = JsonSerializer.Deserialize<Dictionary<string, object>>(hashRaw);
             foreach (var arg in data)
-                hashData.Add(arg.Key, arg.Value);
+                hashData[arg.Key] = arg.Value;
             return new(path, hashData);
         }
         catch (Exception e)

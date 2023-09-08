@@ -9,13 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="templates\hello.md">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Stubble.Core" Version="1.10.8" />
   </ItemGroup>
+
 
 </Project>

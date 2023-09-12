@@ -34,7 +34,7 @@ brew install dotnet \
 cd ~/.mkdoc/src \
 && git fetch \
 && git pull \
-&& dotnet publish -o ..
+&& dotnet publish mkdoc.csproj -o ..
 ```
 
 #### Uninstall

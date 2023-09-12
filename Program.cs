@@ -27,7 +27,7 @@ try
         .Build();
     var output = stubble.Render(template, hashData.Data);
     await File.WriteAllTextAsync(
-        FileSystemOperator.GetOutputFilePath(command, templatePath),
+        FileSystemOperator.GetOutputFilePath(command, templatePath, argMap),
         output,
         CancellationToken.None
     );

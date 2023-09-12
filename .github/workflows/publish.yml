@@ -20,19 +20,6 @@ jobs:
       run: dotnet build --no-restore --verbosity normal
     - name: Test
       run: dotnet test --no-build --verbosity normal
-  version:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    
-  templates:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-    - uses: actions/checkout@v3
-    
   publish:
     runs-on: ubuntu-latest
     needs: test
@@ -49,8 +36,6 @@ jobs:
       name: determine-version
       id: version
     - run: echo 'Version ${{ steps.version.outputs.SemVer2 }}'
-    - run: export VERSION=${{ steps.version.outputs.SemVer2 }}
-    - run: export BUILD=${{ steps.version.outputs.BuildNumber }}
     - name: Publish Templates
       run: |
         mkdir ./dist

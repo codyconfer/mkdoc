@@ -28,7 +28,7 @@ public static class FileSystemOperator
 
     public static string GetOutputFilePath(string command, string templatePath)
     {
-        var fileName = $"{command}{templatePath[(templatePath.LastIndexOf('.'))..]}";
+        var fileName = command.Contains('.') ? command : $"{command}{templatePath[(templatePath.LastIndexOf('.'))..]}";
         fileName = fileName.Contains('/') ? fileName[(fileName.LastIndexOf('/') + 1)..] : fileName;
         return $"{Directory.GetCurrentDirectory()}/{fileName}";
     }

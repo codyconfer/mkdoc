@@ -86,7 +86,7 @@ jobs:
         name: 'mkdoc-macos-x64-${{ steps.version.outputs.SemVer2 }}'
         path: ./dist/macos-x64/mkdoc 
   windows:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: test
     steps:
     - name: checkout

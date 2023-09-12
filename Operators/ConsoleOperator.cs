@@ -2,8 +2,7 @@ namespace mkdoc.Operators;
 
 public static class ConsoleOperator
 {
-    private static string Prefix(this string message, string level) =>
-        $"[{level}] | {message}";
+    private static string Prefix(this string message, string level) => $"[{level}] | {message}";
 
     private static string Print(this string message, string level)
     {

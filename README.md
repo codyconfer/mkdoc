@@ -87,8 +87,8 @@ Add a file named `{template-name}.hashData.json` to `~/.mkdoc/templates`
 
 ---
 
->#### Included Example
-> 
+### Included Example
+
 > ##### Readme.md
 > 
 > 
@@ -153,25 +153,25 @@ Add a file named `{template-name}.hashData.json` to `~/.mkdoc/templates`
 >   "title": "Application Name"
 > }
 > ```
-> 
-> ##### Tutorial
-> 
-> 1. Changing default data
->   - Open `~/.mkdoc/templates/README.hashData.json`
->   - Change the value of `title` to `tutorial`
->   - Run `mkdoc README`
->   - List the files in current directory. You should see a file named `README.md`
->   - Check the contents of `README.md`. You should see `# tutorial`
-> 2. Override default data
->   - Run `mkdoc README -title Override`
->   - Check the contents of `README.md`. You should see `# Override`
-> 3. Changing the output file name
->   - Run `mkdoc README /o foobar.md`
->   - List the files in current directory. You should see a file named `foobar.md`
-> 4. Creating a Template
->   - Create a new file named `tutorial.md` in `~/.mkdoc/templates`
->   - Copy the contents of `README.md` into `tutorial.md`
->   - Change `{{title}}` to `{{heading}}` in `tutorial.md`
->   - Run `mkdoc tutorial -heading "Final Tutorial"`
->   - List the files in current directory. You should see a file named `tutorial.md`
->   - Check the contents of `tutorial.md`. You should see `# Final Tutorial`
+ 
+### Tutorial 
+
+1. Changing default data
+   - Open `~/.mkdoc/templates/README.hashData.json`
+   - Change the value of `title` to `tutorial`
+   - Run `mkdoc README`
+   - List the files in current directory. You should see a file named `README.md`
+   - Check the contents of `README.md`. You should see `# tutorial`
+2. Override default data
+   - Run `mkdoc README -title Override`
+   - Check the contents of `README.md`. You should see `# Override`
+3. Changing the output file name
+   - Run `mkdoc README /o foobar.md`
+   - List the files in current directory. You should see a file named `foobar.md`
+4. Creating a Template
+   - Create a new file named `tutorial.md` in `~/.mkdoc/templates`
+   - Copy the contents of `README.md` into `tutorial.md`
+   - Change `{{title}}` to `{{heading}}` in `tutorial.md`
+   - Run `mkdoc tutorial -heading "Final Tutorial"`
+   - List the files in current directory. You should see a file named `tutorial.md`
+   - Check the contents of `tutorial.md`. You should see `# Final Tutorial`

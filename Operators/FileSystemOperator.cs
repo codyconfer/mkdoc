@@ -1,10 +1,10 @@
 using mkdoc.Records;
 
-namespace mkdoc.Functions;
+namespace mkdoc.Operators;
 
 public static class FileSystemOperator
 {
-    public static string GetTemplateDirPath() =>
+    private static string GetTemplateDirPath() =>
         Environment.GetEnvironmentVariable("TEMPLATE_DIR_PATH")
         ?? $"{Directory.GetCurrentDirectory()}/templates/";
 

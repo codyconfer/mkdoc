@@ -1,9 +1,21 @@
+using mkdoc.Operators;
 using mkdoc.Records;
 
 namespace mkdoc.Functions;
 
 public static class ArgMapper
 {
+    private static readonly string DefaultErrorPrefix = "Error Parsing Arguments";
+
+    private static ArgumentException HandleException(this Exception e) =>
+        new(
+            e switch
+            {
+                ApplicationException => e.Message.PrefixError(DefaultErrorPrefix),
+                _ => DefaultErrorPrefix
+            }
+        );
+
     public static ArgMap ParseArgMap(string[] args)
     {
         try
@@ -36,14 +48,7 @@ public static class ArgMapper
         }
         catch (Exception e)
         {
-            var message = "Error parsing arguments";
-            throw new ArgumentException(
-                e switch
-                {
-                    ApplicationException => $"{message}: {e.Message}",
-                    _ => $"{message}."
-                }
-            );
+            throw e.HandleException();
         }
     }
 }

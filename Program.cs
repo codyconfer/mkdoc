@@ -2,7 +2,8 @@
 using mkdoc.Operators;
 using Stubble.Core.Builders;
 
-static string Timestamp() => $"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}".PrintInfo();
+static void Timestamp() =>
+    $"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}".PrintInfo();
 
 try
 {
@@ -28,6 +29,7 @@ try
     await File.WriteAllTextAsync(outputPath, output, CancellationToken.None);
     "Complete.".PrintInfo();
     Timestamp();
+    Environment.Exit(0);
 }
 catch (Exception e)
 {

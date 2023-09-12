@@ -9,16 +9,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: setup dotnet
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - name: Restore dependencies
+    - name: restore
       run: dotnet restore
-    - name: Build
+    - name: build
       run: dotnet build --no-restore --verbosity normal
-    - name: Test
+    - name: test
       run: dotnet test --no-build --verbosity normal
   publish:
     runs-on: ubuntu-latest
@@ -33,65 +36,65 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - uses: dotnet/nbgv@master
-      name: determine-version
+      name: determine version
       id: version
-    - run: echo 'Version ${{ steps.version.outputs.SemVer2 }}'
-    - name: Publish Templates
+    - run: echo 'version ${{ steps.version.outputs.SemVer2 }}'
+    - name: publish templates
       run: |
         mkdir ./dist
         mkdir ./dist/templates
         cp templates/* ./dist/templates/
-    - name: Upload templates Build Artifact
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        name: templates
-        path: ./dist/templates
-    - name: Publish Arm MacOS
+    - name: publish macos-arm64
       id: macos-arm64
-      run: dotnet publish --runtime osx-arm64 -o ./dist/macos-arm64 mkdoc.csproj
-    - name: Upload Arm MacOS mkdoc Build Artifact
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        name: mkdoc-macos-arm64
-        path: ./dist/macos-arm64/mkdoc
-    - name: Publish x64 MacOS
+      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}' --runtime osx-arm64 -o ./dist/macos-arm64 mkdoc.csproj
+    - name: publish macos-x64
       id: macos-x64
-      run: dotnet publish --runtime osx-x64 -o ./dist/macos-x64 mkdoc.csproj
-    - name: Upload x64 MacOS mkdoc Build Artifact
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        name: mkdoc-macos-x64
-        path: ./dist/macos-x64/mkdoc
-    - name: Publish x64 Windows
+      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}'  --runtime osx-x64 -o ./dist/macos-x64 mkdoc.csproj
+    - name: publish win-x64
       id: win-x64
       run: | 
-        dotnet publish --runtime win-x64 -o ./dist/win-x64 mkdoc.csproj
-    - name: Upload x64 Windows mkdoc Build Artifact
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        name: mkdoc-win-x64
-        path: ./dist/win-x64/mkdoc.exe
-    - name: Publish Arm Windows
+        dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}'  --runtime win-x64 -o ./dist/win-x64 mkdoc.csproj
+    - name: publish win-arm64
       id: win-arm64
-      run: dotnet publish --runtime win-arm64 -o ./dist/win-arm64 mkdoc.csproj
-    - name: Upload Arm Windows mkdoc Build Artifact
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        name: mkdoc-win-arm64
-        path: ./dist/win-arm64/mkdoc.exe
-    - name: Publish x64 Linux
+      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}'  --runtime win-arm64 -o ./dist/win-arm64 mkdoc.csproj
+    - name: publish linux-x64
       id: linux-x64
-      run: dotnet publish --runtime linux-x64 -o ./dist/linux-x64 mkdoc.csproj
-    - name: Upload x64 Linux mkdoc Build Artifact
-      uses: actions/upload-artifact@v3.1.3
-      with:
-        name: mkdoc-linux-x64
-        path: ./dist/linux-x64/mkdoc
-    - name: Publish Arm Linux
+      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}'  --runtime linux-x64 -o ./dist/linux-x64 mkdoc.csproj
+    - name: publish linux-arm64
       id: linux-arm64
-      run: dotnet publish --runtime linux-arm64 -o ./dist/linux-arm64 mkdoc.csproj
-    - name: Upload Arm Linux mkdoc Build Artifact
+      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}'  --runtime linux-arm64 -o ./dist/linux-arm64 mkdoc.csproj
+    - name: push templates artifact
       uses: actions/upload-artifact@v3.1.3
       with:
-        name: mkdoc-linux-arm64
+        name: 'templates-${{ steps.version.outputs.SemVer2 }}'
+        path: ./dist/templates
+    - name: push macos-arm64 artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: 'mkdoc-macos-arm64-${{ steps.version.outputs.SemVer2 }}'
+        path: ./dist/macos-arm64/mkdoc
+    - name: push macos-x64 artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: 'mkdoc-macos-x64-${{ steps.version.outputs.SemVer2 }}'
+        path: ./dist/macos-x64/mkdoc
+    - name: push win-x64 artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: 'mkdoc-win-x64-${{ steps.version.outputs.SemVer2 }}'
+        path: ./dist/win-x64/mkdoc.exe
+    - name: push win-arm64 artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: 'mkdoc-win-arm64-${{ steps.version.outputs.SemVer2 }}'
+        path: ./dist/win-arm64/mkdoc.exe
+    - name: push linux-x64 artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: 'mkdoc-linux-x64-${{ steps.version.outputs.SemVer2 }}'
+        path: ./dist/linux-x64/mkdoc
+    - name: push linux-arm64 artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: 'mkdoc-linux-arm64-${{ steps.version.outputs.SemVer2 }}'
         path: ./dist/linux-arm64/mkdoc

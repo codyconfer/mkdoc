@@ -157,21 +157,21 @@ Add a file named `{template-name}.hashData.json` to `~/.mkdoc/templates`
 > ##### Tutorial
 > 
 > 1. Changing default data
->   1. Open `~/.mkdoc/templates/README.hashData.json`
->   2. Change the value of `title` to `tutorial`
->   3. Run `mkdoc README`
->   4. List the files in current directory. You should see a file named `README.md`
->   5. Check the contents of `README.md`. You should see `# tutorial`
+>   - Open `~/.mkdoc/templates/README.hashData.json`
+>   - Change the value of `title` to `tutorial`
+>   - Run `mkdoc README`
+>   - List the files in current directory. You should see a file named `README.md`
+>   - Check the contents of `README.md`. You should see `# tutorial`
 > 2. Override default data
->   1. Run `mkdoc README -title Override`
->   2. Check the contents of `README.md`. You should see `# Override`
+>   - Run `mkdoc README -title Override`
+>   - Check the contents of `README.md`. You should see `# Override`
 > 3. Changing the output file name
->   1. Run `mkdoc README /o foobar.md`
->   2. List the files in current directory. You should see a file named `foobar.md`
+>   - Run `mkdoc README /o foobar.md`
+>   - List the files in current directory. You should see a file named `foobar.md`
 > 4. Creating a Template
->   1. Create a new file named `tutorial.md` in `~/.mkdoc/templates`
->   2. Copy the contents of `README.md` into `tutorial.md`
->   3. Change `{{title}}` to `{{heading}}` in `tutorial.md`
->   4. Run `mkdoc tutorial -heading "Final Tutorial"`
->   5. List the files in current directory. You should see a file named `tutorial.md`
->   6. Check the contents of `tutorial.md`. You should see `# Final Tutorial`
+>   - Create a new file named `tutorial.md` in `~/.mkdoc/templates`
+>   - Copy the contents of `README.md` into `tutorial.md`
+>   - Change `{{title}}` to `{{heading}}` in `tutorial.md`
+>   - Run `mkdoc tutorial -heading "Final Tutorial"`
+>   - List the files in current directory. You should see a file named `tutorial.md`
+>   - Check the contents of `tutorial.md`. You should see `# Final Tutorial`

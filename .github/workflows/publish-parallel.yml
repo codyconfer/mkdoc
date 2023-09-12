@@ -36,7 +36,6 @@ jobs:
     - uses: dotnet/nbgv@master
       name: determine version
       id: version
-    - run: echo 'version ${{ steps.version.outputs.SemVer2 }}'
     - name: publish templates
       run: |
         mkdir ./dist
@@ -48,7 +47,7 @@ jobs:
         name: 'templates-${{ steps.version.outputs.SemVer2 }}'
         path: ./dist/templates    
   macos:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     needs: test
     steps:
     - name: checkout
@@ -59,28 +58,35 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - uses: dotnet/nbgv@master
-      name: determine version
+    - name: determine version
+      uses: dotnet/nbgv@master
       id: version
-    - run: echo 'version ${{ steps.version.outputs.SemVer2 }}'
     - name: publish macos-arm64
       id: macos-arm64
-      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}' --runtime osx-arm64 -o ./dist/macos-arm64 mkdoc.csproj
+      run: |
+        dotnet publish \
+        --version-suffix '${{ steps.version.outputs.SemVer2 }}' \
+        --runtime osx-arm64 \
+        -o ./dist/macos-arm64 mkdoc.csproj
+    - name: publish macos-x64
+      id: macos-x64
+      run: |
+        dotnet publish \
+        --version-suffix '${{ steps.version.outputs.SemVer2 }}' \
+        --runtime osx-x64 \
+        -o ./dist/macos-x64 mkdoc.csproj
     - name: push macos-arm64 artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: 'mkdoc-macos-arm64-${{ steps.version.outputs.SemVer2 }}'
         path: ./dist/macos-arm64/mkdoc
-    - name: publish macos-x64
-      id: macos-x64
-      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}' --runtime osx-x64 -o ./dist/macos-x64 mkdoc.csproj
     - name: push macos-x64 artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: 'mkdoc-macos-x64-${{ steps.version.outputs.SemVer2 }}'
         path: ./dist/macos-x64/mkdoc 
   windows:
-    runs-on: win-latest
+    runs-on: windows-latest
     needs: test
     steps:
     - name: checkout
@@ -91,22 +97,28 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - uses: dotnet/nbgv@master
-      name: determine version
+    - name: determine version
+      uses: dotnet/nbgv@master
       id: version
-    - run: echo 'version ${{ steps.version.outputs.SemVer2 }}'
     - name: publish win-x64
       id: win-x64
       run: | 
-        dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}' --runtime win-x64 -o ./dist/win-x64 mkdoc.csproj
+        dotnet publish \
+        --version-suffix '${{ steps.version.outputs.SemVer2 }}' \
+        --runtime win-x64 \
+        -o ./dist/win-x64 mkdoc.csproj
+    - name: publish win-arm64
+      id: win-arm64
+      run: |
+        dotnet publish \
+        --version-suffix '${{ steps.version.outputs.SemVer2 }}' \
+        --runtime win-arm64 \
+        -o ./dist/win-arm64 mkdoc.csproj
     - name: push win-x64 artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: 'mkdoc-win-x64-${{ steps.version.outputs.SemVer2 }}'
         path: ./dist/win-x64/mkdoc.exe
-    - name: publish win-arm64
-      id: win-arm64
-      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}' --runtime win-arm64 -o ./dist/win-arm64 mkdoc.csproj
     - name: push win-arm64 artifact
       uses: actions/upload-artifact@v3.1.3
       with:
@@ -124,21 +136,28 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - uses: dotnet/nbgv@master
-      name: determine version
+    - name: determine version
+      uses: dotnet/nbgv@master
       id: version
-    - run: echo 'version ${{ steps.version.outputs.SemVer2 }}'
     - name: publish linux-x64
       id: linux-x64
-      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}' --runtime linux-x64 -o ./dist/linux-x64 mkdoc.csproj
+      run: |
+        dotnet publish \
+        --version-suffix '${{ steps.version.outputs.SemVer2 }}' \
+        --runtime linux-x64 \
+        -o ./dist/linux-x64 mkdoc.csproj
+    - name: publish linux-arm64
+      id: linux-arm64
+      run: |
+        dotnet publish \
+        --version-suffix '${{ steps.version.outputs.SemVer2 }}' \
+        --runtime linux-arm64 \
+        -o ./dist/linux-arm64 mkdoc.csproj
     - name: push linux-x64 artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: 'mkdoc-linux-x64-${{ steps.version.outputs.SemVer2 }}'
         path: ./dist/linux-x64/mkdoc
-    - name: publish linux-arm64
-      id: linux-arm64
-      run: dotnet publish --version-suffix '${{ steps.version.outputs.SemVer2 }}' --runtime linux-arm64 -o ./dist/linux-arm64 mkdoc.csproj
     - name: push linux-arm64 artifact
       uses: actions/upload-artifact@v3.1.3
       with:

@@ -11,9 +11,30 @@ mkdoc is a C# console application that templates files with mustache.
 
 ## Getting Started
 
-### Installation
+### From Source
 
-//TODO working on workflows
+#### Installation
+
+```bash
+brew install dotnet \
+&& mkdir ~/.mkdoc && mkdir ~/.mkdoc/src \
+&& git clone https://github.com/codyconfer/mkdoc.git ~/.mkdoc/src \
+&& cd ~/.mkdoc/src \
+&& dotnet publish -o .. \
+&& echo '# mkdoc' >> ~/.zshrc \
+&& echo 'export PATH="$PATH:$HOME/.mkdoc/"' >> ~/.zshrc \
+&& echo 'export TEMPLATE_DIR_PATH="$HOME/.mkdoc/templates"' >> ~/.zshrc \
+&& source ~/.zshrc
+```
+
+#### Update
+
+```bash
+cd ~/.mkdoc/src \
+&& git fetch \
+&& git pull \
+&& dotnet publish -o ..
+```
 
 ### Usage
 
@@ -24,9 +45,3 @@ mkdoc {template-name} -hashdata.json {path-to-json} -{key} {value}
 - {template-name} REQUIRED
 - -hashdata.json {path-to-json} OPTIONAL (if not specified, hashData is assumed to be located at @templates/{template-name}.hashData)
 - -{key} {value} OPTIONAL (if specified, will overwrite values in hashData)
-
-### Building from Source
-
-```bash
-dotnet publish -o ./dist mkdoc.csproj
-```

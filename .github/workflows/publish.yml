@@ -16,24 +16,41 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore --verbosity normal
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-build --verbosity normal
   version:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - uses: dotnet/nbgv@master
-      id: nbgv
-      with:
-        stamp: package.json
-    - run: echo 'SemVer2=${{ steps.nbgv.outputs.SemVer2 }}'
+    
   templates:
     runs-on: ubuntu-latest
     needs: test
     steps:
     - uses: actions/checkout@v3
+    
+  publish:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - uses: dotnet/nbgv@master
+      name: determine-version
+      id: version
+    - run: echo 'Version ${{ steps.version.outputs.SemVer2 }}'
+    - run: export VERSION=${{ steps.version.outputs.SemVer2 }}
+    - run: export BUILD=${{ steps.version.outputs.BuildNumber }}
     - name: Publish Templates
       run: |
         mkdir ./dist
@@ -44,100 +61,52 @@ jobs:
       with:
         name: templates
         path: ./dist/templates
-  macos-arm64:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
     - name: Publish Arm MacOS
-      run: dotnet publish --runtime osx-arm64 -o ./dist mkdoc.csproj
+      id: macos-arm64
+      run: dotnet publish --runtime osx-arm64 -o ./dist/macos-arm64 mkdoc.csproj
     - name: Upload Arm MacOS mkdoc Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc-macos-arm64
-        path: ./dist/mkdoc
-  macos-x64:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
+        path: ./dist/macos-arm64/mkdoc
     - name: Publish x64 MacOS
-      run: dotnet publish --runtime osx-x64 -o ./dist mkdoc.csproj
+      id: macos-x64
+      run: dotnet publish --runtime osx-x64 -o ./dist/macos-x64 mkdoc.csproj
     - name: Upload x64 MacOS mkdoc Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc-macos-x64
-        path: ./dist/mkdoc
-  win-x64:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
+        path: ./dist/macos-x64/mkdoc
     - name: Publish x64 Windows
+      id: win-x64
       run: | 
-        dotnet publish --runtime win-x64 -o ./dist mkdoc.csproj
+        dotnet publish --runtime win-x64 -o ./dist/win-x64 mkdoc.csproj
     - name: Upload x64 Windows mkdoc Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc-win-x64
-        path: ./dist/mkdoc.exe
-  win-arm64:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
+        path: ./dist/win-x64/mkdoc.exe
     - name: Publish Arm Windows
-      run: dotnet publish --runtime win-arm64 -o ./dist mkdoc.csproj
+      id: win-arm64
+      run: dotnet publish --runtime win-arm64 -o ./dist/win-arm64 mkdoc.csproj
     - name: Upload Arm Windows mkdoc Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc-win-arm64
-        path: ./dist/mkdoc.exe
-  linux-x64:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
+        path: ./dist/win-arm64/mkdoc.exe
     - name: Publish x64 Linux
-      run: dotnet publish --runtime linux-x64 -o ./dist mkdoc.csproj
+      id: linux-x64
+      run: dotnet publish --runtime linux-x64 -o ./dist/linux-x64 mkdoc.csproj
     - name: Upload x64 Linux mkdoc Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc-linux-x64
-        path: ./dist/mkdoc
-  linux-arm64:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
+        path: ./dist/linux-x64/mkdoc
     - name: Publish Arm Linux
-      run: dotnet publish --runtime linux-arm64 -o ./dist mkdoc.csproj
+      id: linux-arm64
+      run: dotnet publish --runtime linux-arm64 -o ./dist/linux-arm64 mkdoc.csproj
     - name: Upload Arm Linux mkdoc Build Artifact
       uses: actions/upload-artifact@v3.1.3
       with:
         name: mkdoc-linux-arm64
-        path: ./dist/mkdoc
+        path: ./dist/linux-arm64/mkdoc

@@ -13,7 +13,7 @@ mkdoc is a C# console application that templates files with mustache.
 
 ### From Source
 
-#### Installation
+#### Install
 
 ```bash
 brew install dotnet \
@@ -34,6 +34,12 @@ cd ~/.mkdoc/src \
 && git fetch \
 && git pull \
 && dotnet publish -o ..
+```
+
+#### Uninstall
+
+```bash
+rm -R ~/.mkdoc
 ```
 
 ### Usage

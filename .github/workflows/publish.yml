@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -18,6 +20,14 @@ jobs:
       run: dotnet restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+  version:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: dotnet/nbgv@master
+      id: nbgv
+      with:
+        stamp: package.json
+    - run: echo 'SemVer2=${{ steps.nbgv.outputs.SemVer2 }}'
   templates:
     runs-on: ubuntu-latest
     needs: test

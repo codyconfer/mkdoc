@@ -2,15 +2,6 @@
 using mkdoc.Operators;
 using Stubble.Core.Builders;
 
-// ...
-// Invocation: mkdoc {template-name} -hashdata.json {path-to-json} -{key} {value}
-//  {template-name} REQUIRED
-//  -hashdata.json {path-to-json} OPTIONAL
-//      (if not specified, hashData is assumed to be located at @templates/{template-name}.hashData)
-// -{key} {value} OPTIONAL
-//      (if specified, will overwrite values in hashData)
-// ...
-
 try
 {
     var argMap = ArgMapper.ParseArgMap(args);

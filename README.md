@@ -46,11 +46,12 @@ rm -R ~/.mkdoc
 ### Usage
 
 ```bash
-mkdoc {template-name} -hashdata.json {path-to-json} -{key} {value}
+mkdoc {template-name} /i {path-to-json} /o {output-file-name} -{key} {value}
 ```
 
 - {template-name} template filename with or without extension REQUIRED
-- -hashdata.json {path-to-json} OPTIONAL (if not specified, hashData is assumed to be located at @templates/{template-name}.hashData)
+- /i {path-to-json} OPTIONAL (if not specified, hashData is assumed to be located at @templates/{template-name}.hashData.json)
+- /o {output-file-name} OPTIONAL (if not specified, output file will be named {template-name})
 - -{key} {value} OPTIONAL (if specified, will overwrite values in hashData)
 
 ### Adding Templates

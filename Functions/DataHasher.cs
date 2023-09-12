@@ -13,7 +13,7 @@ public static class DataHasher
             var command = argMap.Command;
             var data = argMap.Data;
             var path = GetTemplatePath(command);
-            var hashDataPath = GetHashDataPath(command, data);
+            var hashDataPath = GetHashDataPath(command, argMap);
             if (string.IsNullOrEmpty($"{hashDataPath}"))
                 return new(path, data);
             var hashRaw = await File.ReadAllTextAsync($"{hashDataPath}");

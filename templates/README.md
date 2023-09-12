@@ -1,12 +1,38 @@
 # {{title}}
 
-## Tech Stack
+## Stack
+
+---
 
 ## Getting Started
 
-### Installation
+### From Source
 
-### Running
+#### Build
+
+
+
+#### Configure
+
+
+
+#### Uninstall
+
+
+
+>#### Quick Setup
+> 
+> ###### Build
+> 
+> 
+> 
+> ###### Configure
+> 
+> 
+> 
+> ###### Uninstall
+> 
+
+## Usage
 
 ## Contributing
-

@@ -3,7 +3,7 @@ namespace mkdoc.Operators;
 public static class ConsoleOperator
 {
     private static string Prefix(this string message, string level) =>
-        $"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}-[{level}] | {message}";
+        $"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}-[{level}]{Environment.NewLine}{message}";
 
     private static string Print(this string message, string level)
     {

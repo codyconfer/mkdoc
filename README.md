@@ -85,7 +85,9 @@ Add [mustache](https://mustache.github.io/) templates to `~/.mkdoc/templates`
 
 Add a file named `{template-name}.hashData.json` to `~/.mkdoc/templates`
 
->#### *Included Example*
+---
+
+>#### Included Example
 > 
 > ##### Readme.md
 > 

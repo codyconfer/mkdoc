@@ -1,6 +1,6 @@
 # mkdoc
 
-mkdoc is a C# console application that templates files with mustache. 
+mkdoc is a C# console application that templates files with [mustache](https://mustache.github.io/). 
 
 ## Tech Stack
 
@@ -20,7 +20,8 @@ brew install dotnet \
 && mkdir ~/.mkdoc && mkdir ~/.mkdoc/src \
 && git clone https://github.com/codyconfer/mkdoc.git ~/.mkdoc/src \
 && cd ~/.mkdoc/src \
-&& dotnet publish -o .. \
+&& dotnet publish mkdoc.csproj -o .. \
+&& cd && clear && echo >> ~/.zshrc \
 && echo '# mkdoc' >> ~/.zshrc \
 && echo 'export PATH="$PATH:$HOME/.mkdoc/"' >> ~/.zshrc \
 && echo 'export TEMPLATE_DIR_PATH="$HOME/.mkdoc/templates"' >> ~/.zshrc \
@@ -48,6 +49,10 @@ rm -R ~/.mkdoc
 mkdoc {template-name} -hashdata.json {path-to-json} -{key} {value}
 ```
 
-- {template-name} REQUIRED
+- {template-name} template filename with or without extension REQUIRED
 - -hashdata.json {path-to-json} OPTIONAL (if not specified, hashData is assumed to be located at @templates/{template-name}.hashData)
 - -{key} {value} OPTIONAL (if specified, will overwrite values in hashData)
+
+### Adding Templates
+
+Add [mustache](https://mustache.github.io/) templates to `~/.mkdoc/templates`

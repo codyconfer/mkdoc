@@ -2,8 +2,11 @@
 using mkdoc.Operators;
 using Stubble.Core.Builders;
 
+static string Timestamp() => $"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}".PrintInfo();
+
 try
 {
+    Timestamp();
     var argMap = ArgMapper.ParseArgMap(args);
     var command = argMap.Command;
     $"Gathering hash data for {command} ...".PrintInfo();
@@ -24,6 +27,7 @@ try
     $"Writing to {outputPath} ...".PrintInfo();
     await File.WriteAllTextAsync(outputPath, output, CancellationToken.None);
     "Complete.".PrintInfo();
+    Timestamp();
 }
 catch (Exception e)
 {

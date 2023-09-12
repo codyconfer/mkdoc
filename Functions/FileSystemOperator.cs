@@ -18,7 +18,7 @@ public static class FileSystemOperator
 
     public static string GetHashDataPath(string action, ArgMap argMap)
     {
-        if (argMap.Config.TryGetValue("/i", out var inputArg))
+        if (argMap.Config.TryGetValue("i", out var inputArg))
             return $"{inputArg}";
         var templateDirPath = GetTemplateDirPath();
         var hasHashDataArg = argMap.Data.TryGetValue("hashdata.json", out var hashDataPath);
@@ -32,9 +32,11 @@ public static class FileSystemOperator
 
     public static string GetOutputFilePath(string command, string templatePath, ArgMap argMap)
     {
-        if (argMap.Config.TryGetValue("/o", out var outputArg))
+        if (argMap.Config.TryGetValue("o", out var outputArg))
             return $"{Directory.GetCurrentDirectory()}/{outputArg}";
-        var fileName = command.Contains('.') ? command : $"{command}{templatePath[(templatePath.LastIndexOf('.'))..]}";
+        var fileName = command.Contains('.')
+            ? command
+            : $"{command}{templatePath[(templatePath.LastIndexOf('.'))..]}";
         fileName = fileName.Contains('/') ? fileName[(fileName.LastIndexOf('/') + 1)..] : fileName;
         return $"{Directory.GetCurrentDirectory()}/{fileName}";
     }
